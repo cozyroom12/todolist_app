@@ -10,7 +10,7 @@ function saveUsers(users) {
 const currentUser = localStorage.getItem("currentUser");
 
 if (currentUser) {
-  // hide the login form and show a welcome msg
+  // hide the login form and welcome 보여주기
   document.querySelector(".login-box").style.display = "none";
   alert(`Welcome back, ${currentUser}!`);
 }
