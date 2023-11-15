@@ -6,36 +6,54 @@ const todoInput = todoForm.querySelector("input");
 const todoList = document.getElementById("todo-list");
 const todoBtn = document.querySelector(".todo-btn");
 
-function showTodo(e) {
+let todoArray = [];
+
+function handleSubmit(e) {
   e.preventDefault(); //
   const newTodo = todoInput.value;
-  // console.log(newTodo);
+  todoInput.value = "";
+  const newTodoObj = {
+    text: newTodo,
+    id: Date.now(),
+  };
+  todoArray.push(newTodoObj);
+  showTodo(newTodoObj);
+  saveData();
+  console.log(newTodoObj);
+}
 
+function showTodo(newTodo) {
   let li = document.createElement("li");
+  li.id = newTodo.id;
+
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   li.appendChild(checkbox);
 
-  li.innerHTML += newTodo;
+  const text = document.createElement("span");
+  text.innerText = newTodo.text;
+  // span 이 두개라 클래스 지정하고 스타일 각각 바꿔줌
+  text.classList.add("text-style");
+  li.appendChild(text);
+
+  let deleteBtn = document.createElement("span");
+  deleteBtn.innerHTML = "\u00d7";
+  deleteBtn.classList.add("delete-btn-style");
+  li.appendChild(deleteBtn);
+
   todoList.appendChild(li);
-
-  let span = document.createElement("span"); // button for deleting
-  span.innerHTML = "\u00d7";
-  li.appendChild(span);
-
-  todoInput.value = "";
   saveData();
 }
 
+function getLoggedInUser() {
+  return JSON.parse(localStorage.getItem("currentUser"));
+}
+
 function saveData() {
-  localStorage.setItem("data", todoList.innerHTML);
+  localStorage.setItem("data", JSON.stringify(todoArray));
 }
 
-function showTask() {
-  todoList.innerHTML = localStorage.getItem("data");
-}
-
-todoForm.addEventListener("submit", showTodo);
+todoForm.addEventListener("submit", handleSubmit);
 
 todoList.addEventListener(
   "click",
@@ -52,6 +70,14 @@ todoList.addEventListener(
   false
 );
 
-todoBtn.addEventListener("click", showTodo);
+todoBtn.addEventListener("click", handleSubmit); // empty input should be managed
 
-showTask();
+function showTask() {
+  const savedTodos = localStorage.getItem("data");
+
+  if (savedTodos !== null) {
+    const parsedTodos = JSON.parse(savedTodos);
+    todoArray = parsedTodos;
+    parsedTodos.forEach(showTodo);
+  }
+}

@@ -65,7 +65,7 @@ ul li input {
   position: relative;
 }
 
-ul li span {
+ul li .delete-btn-style {
   position: absolute;
   top: 0;
   right: 0;
@@ -78,6 +78,10 @@ ul li span {
   border-radius: 50%;
   cursor: pointer;
 }
-ul li span:hover {
+ul li .delete-btn-style:hover {
   background: #edeef0;
+}
+
+ul li .text-style {
+  font-size: 15px;
 }
