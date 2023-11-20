@@ -1,18 +1,5 @@
 const loginForm = document.getElementById("login-form");
 
-// loginForm.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const usernameInput = document.querySelector(".name").value.toLowerCase();
-//   const passwordInput = document.querySelector(".password").value;
-
-//   const data = localStorage.getItem("users");
-//   const userList = JSON.parse(data); // array type
-
-//   // if (usernameInput == "Maru") {
-//   //   // how do i do upcap here??
-//   //   console.log("the user is sensed. now what?");
-// });
-
 function login(username, password) {
   const users = JSON.parse(localStorage.getItem("users")) || [];
   const currentUsers = users.find(
@@ -22,7 +9,7 @@ function login(username, password) {
   if (currentUsers) {
     localStorage.setItem("currentUser", JSON.stringify(currentUsers));
 
-    window.location.href = "index.html";
+    window.location.href = "todo.html";
   } else {
     alert("Invalid username or password");
   }

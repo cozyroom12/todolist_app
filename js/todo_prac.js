@@ -6,13 +6,16 @@ const todoInput = todoForm.querySelector("input");
 const todoList = document.getElementById("todo-list");
 const todoBtn = document.querySelector(".todo-btn");
 
+const currentUser = JSON.parse(localStorage.getItem("currentUser")) || [];
+
 let todoArray = [];
 
 function handleSubmit(e) {
-  e.preventDefault(); //
+  e.preventDefault();
   const newTodo = todoInput.value;
   todoInput.value = "";
   const newTodoObj = {
+    username: currentUser.username,
     text: newTodo,
     id: Date.now(),
   };
@@ -32,7 +35,7 @@ function showTodo(newTodo) {
 
   const text = document.createElement("span");
   text.innerText = newTodo.text;
-  // span 이 두개라 클래스 지정하고 스타일 각각 바꿔줌
+  // add style to each span element
   text.classList.add("text-style");
   li.appendChild(text);
 
@@ -78,6 +81,13 @@ function showTask() {
   if (savedTodos !== null) {
     const parsedTodos = JSON.parse(savedTodos);
     todoArray = parsedTodos;
-    parsedTodos.forEach(showTodo);
+    console.log(parsedTodos);
+
+    parsedTodos.forEach((item) => {
+      if (item.username === currentUser.username) {
+        showTodo(item);
+      }
+    });
   }
 }
+showTask();
