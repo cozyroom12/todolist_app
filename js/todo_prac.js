@@ -61,14 +61,15 @@ todoForm.addEventListener("submit", handleSubmit);
 todoList.addEventListener(
   "click",
   function (e) {
+    const li = e.target.parentElement;
     if (e.target.tagName === "INPUT" && e.target.type === "checkbox") {
-      const li = e.target.parentElement;
       li.classList.toggle("checked");
       saveData();
-    } else if (e.target.tagName === "SPAN") {
-      e.target.parentElement.remove();
+    } else if (e.target.classList.contains("delete-btn-style")) {
+      li.remove();
+      todoArray = todoArray.filter((todo) => todo.id !== parseInt(li.id));
       saveData();
-    }
+    } // SPAN 첫번째 child 로 해야하나??
   },
   false
 );
@@ -91,3 +92,12 @@ function showTask() {
   }
 }
 showTask();
+
+//logout
+const logoutBtn = document.querySelector(".logout-btn");
+
+logoutBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  window.location.href = "login.html";
+  localStorage.removeItem("currentUser");
+});
