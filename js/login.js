@@ -8,6 +8,7 @@ function login(username, password) {
 
   if (currentUsers) {
     localStorage.setItem("currentUser", JSON.stringify(currentUsers));
+    alert(`Welcome back, ${currentUsers.username}!`);
 
     window.location.href = "todo.html";
   } else {
@@ -19,20 +20,20 @@ function getLoggedInUser() {
   return JSON.parse(localStorage.getItem("currentUser"));
 }
 
-// user specific page ...
-function displayTodoList() {
-  const user = getLoggedInUser();
-  const todos = JSON.parse(localStorage.getItem("todos")) || [];
+// user specific page  -> todo.js 로 옮김
+// function displayTodoList() {
+//   const user = getLoggedInUser();
+//   const todos = JSON.parse(localStorage.getItem("data")) || [];
 
-  if (user && user.todo) {
-    const userTodos = todos.filter((todo) => todo.username === user.username);
-    userTodos.forEach((todo) => showTodo(todo));
-  }
-}
+//   if (user && user.todo) {
+//     const userTodos = todos.filter((todo) => todo.username === user.username);
+//     userTodos.forEach((todo) => showTodo(todo));
+//   }
+// }
 
-window.onload = function () {
-  displayTodoList();
-};
+// window.onload = function () {
+//   displayTodoList();
+// };
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
